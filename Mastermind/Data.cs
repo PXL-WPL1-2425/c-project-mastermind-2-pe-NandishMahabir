@@ -15,6 +15,7 @@ namespace Mastermind
         private static Random random = new Random();
         private static DispatcherTimer timer = new DispatcherTimer();
         private static int secondsPassed;
+        public static int HighscoresSaved { get; set; }
         public static int Attempts { get; set; }
         public static int Score { get; set; }
         static Dictionary<SolidColorBrush, string> colors = new Dictionary<SolidColorBrush, string>();
@@ -27,6 +28,14 @@ namespace Mastermind
         {
             get {  return colorCode; }
         }
+        private static string[] highscores;
+
+        public static string[] Highscores
+        {
+            get { return highscores; }
+            set { highscores = value; }
+        }
+
         public static bool Color1LabelAdded { get; set; }
         public static bool Color2LabelAdded { get; set; }
         public static bool Color3LabelAdded { get; set; }
@@ -40,7 +49,9 @@ namespace Mastermind
             colors.Add(Brushes.Blue, "Blue");
             colors.Add(Brushes.White, "White");
             Attempts = 1;
+            HighscoresSaved = 0;
             Score = 100;
+            highscores = new string[15]; 
             timer.Tick += new EventHandler(CheckTimer);
             timer.Interval = new TimeSpan(0, 0, 1);
         }

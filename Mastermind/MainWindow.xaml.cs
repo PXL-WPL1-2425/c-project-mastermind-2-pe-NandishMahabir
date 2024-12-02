@@ -143,8 +143,6 @@ namespace Mastermind
                 {
                     ChangeBorder(stackPanels[i], points[i]);
                 }
-                ClearComboBoxSelection();
-                Data.IncreaseAttempst();
                 if (!Data.CheckGameOver())
                 {
                     int score = 0;
@@ -154,7 +152,9 @@ namespace Mastermind
                     }
                     if (score == 8)
                     {
-                        MessageBox.Show($"You Managed to crack the right code, you hade a score of {Data.Score}!", "You won");
+                        MessageBox.Show($"You Managed to crack the right code,your score is {Data.Score} points!", "You won");
+                        Data.Highscores.SetValue($"{playerName} - {Data.Attempts} pogingen - {Data.Score}/100", Data.HighscoresSaved);
+                        Data.HighscoresSaved++;
                     }
                     else
                     {
@@ -165,6 +165,8 @@ namespace Mastermind
                 {
                     MessageBox.Show($"You did not manage to crack the right code, the correct code was {string.Join(" ", Data.ColorCode)}. Better luck next time!", "Game over");
                 }
+                ClearComboBoxSelection();
+                Data.IncreaseAttempst();
 
             }
             else
@@ -236,7 +238,15 @@ namespace Mastermind
 
         private void MnuHighscores_Click(object sender, RoutedEventArgs e)
         {
-
+            StringBuilder sb = new StringBuilder();
+            foreach (string score in Data.Highscores)
+            {
+                if (!(score is null))
+                {
+                    sb.AppendLine(score);
+                }
+            }
+            MessageBox.Show(sb.ToString(), "Mastemind highscores");
         }
 
         private void MnuAantalPogingen_Click(object sender, RoutedEventArgs e)
