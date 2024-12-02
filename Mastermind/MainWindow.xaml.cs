@@ -25,6 +25,7 @@ namespace Mastermind
         DispatcherTimer titleUpdate = new DispatcherTimer();
         List<StackPanel> stackPanels = new List<StackPanel>();
         int timesvalidated;
+        string playerName;
         public MainWindow()
         {
             InitializeComponent();
@@ -153,16 +154,7 @@ namespace Mastermind
                     }
                     if (score == 8)
                     {
-                        MessageBoxResult answer = MessageBox.Show($"You Managed to crack the right code, you hade a score of {Data.Score}! Want to try again?", "You won", MessageBoxButton.YesNo);
-                        if (answer == MessageBoxResult.No)
-                        {
-                            this.Close();
-                        }
-                        else
-                        {
-                            Data.ResetGame();
-                            ClearUI();
-                        }
+                        MessageBox.Show($"You Managed to crack the right code, you hade a score of {Data.Score}!", "You won");
                     }
                     else
                     {
@@ -171,16 +163,7 @@ namespace Mastermind
                 }
                 else
                 {
-                    MessageBoxResult answer = MessageBox.Show($"You did not manage to crack the right code, the correct code was {string.Join(" ", Data.ColorCode)}. Better luck next time! Want to try again?", "Game over", MessageBoxButton.YesNo);
-                    if (answer == MessageBoxResult.No)
-                    {
-                        this.Close();
-                    }
-                    else
-                    {
-                        Data.ResetGame();
-                        ClearUI();
-                    }
+                    MessageBox.Show($"You did not manage to crack the right code, the correct code was {string.Join(" ", Data.ColorCode)}. Better luck next time!", "Game over");
                 }
 
             }
@@ -227,6 +210,7 @@ namespace Mastermind
             }
             ColorCodeTextbox.Clear();
             timesvalidated = 0;
+            playerName = string.Empty;
         }
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
@@ -240,12 +224,14 @@ namespace Mastermind
 
         private void MnuAfsluiten_Click(object sender, RoutedEventArgs e)
         {
-
+            this.Close();
         }
 
         private void MnuNieuwSpel_Click(object sender, RoutedEventArgs e)
         {
-
+            ClearUI();
+            Data.ResetGame();
+            StartGame();
         }
 
         private void MnuHighscores_Click(object sender, RoutedEventArgs e)
@@ -260,14 +246,14 @@ namespace Mastermind
 
         private string StartGame()
         {
-            string playerName = Interaction.InputBox("What is your name?", "Player Name", "", 500);
+            playerName = Interaction.InputBox("What is your name?", "Player Name", "", 500);
             while (string.IsNullOrEmpty(playerName))
             {
                 MessageBox.Show("Please select a valid name!", "Invalid Name");
                 playerName = Interaction.InputBox("What is your name?", "Player Name", "", 500);
             }
+            Data.StartCountdown();
             return playerName;
-
         }
     }
 }

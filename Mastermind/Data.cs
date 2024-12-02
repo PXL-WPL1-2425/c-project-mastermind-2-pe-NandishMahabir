@@ -52,7 +52,6 @@ namespace Mastermind
                 int index = random.Next(0, colors.Count);
                 colorCode.Add(colors.ElementAt(index).Value);
             }
-            StartCountdown();
         }
         public static List<int> ValidateColorCode(List<string> inputColors)
         {
