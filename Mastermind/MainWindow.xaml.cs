@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.VisualBasic;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -27,6 +28,7 @@ namespace Mastermind
         public MainWindow()
         {
             InitializeComponent();
+            StartGame();
             Data.GenerateRandomColorCode();
             FillComboBoxes();
 
@@ -253,6 +255,18 @@ namespace Mastermind
 
         private void MnuAantalPogingen_Click(object sender, RoutedEventArgs e)
         {
+
+        }
+
+        private string StartGame()
+        {
+            string playerName = Interaction.InputBox("What is your name?", "Player Name", "", 500);
+            while (string.IsNullOrEmpty(playerName))
+            {
+                MessageBox.Show("Please select a valid name!", "Invalid Name");
+                playerName = Interaction.InputBox("What is your name?", "Player Name", "", 500);
+            }
+            return playerName;
 
         }
     }
