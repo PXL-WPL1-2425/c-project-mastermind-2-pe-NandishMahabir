@@ -17,6 +17,7 @@ namespace Mastermind
         private static int secondsPassed;
         public static int HighscoresSaved { get; set; }
         public static int Attempts { get; set; }
+        public static int PossibleAttempts { get; set; }
         public static int Score { get; set; }
         static Dictionary<SolidColorBrush, string> colors = new Dictionary<SolidColorBrush, string>();
         public static Dictionary<SolidColorBrush, string> Colors
@@ -51,6 +52,7 @@ namespace Mastermind
             Attempts = 1;
             HighscoresSaved = 0;
             Score = 100;
+            PossibleAttempts = 10;
             highscores = new string[15]; 
             timer.Tick += new EventHandler(CheckTimer);
             timer.Interval = new TimeSpan(0, 0, 1);
@@ -154,7 +156,7 @@ namespace Mastermind
         }
         public static bool CheckGameOver()
         {
-            if (Attempts > 10)
+            if (Attempts > PossibleAttempts - 1)
             {
                 return true;
             }

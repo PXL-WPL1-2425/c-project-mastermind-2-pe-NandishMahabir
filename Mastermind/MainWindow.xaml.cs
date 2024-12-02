@@ -251,7 +251,17 @@ namespace Mastermind
 
         private void MnuAantalPogingen_Click(object sender, RoutedEventArgs e)
         {
-
+            string input  = Interaction.InputBox("How many attempts would you like to have?", "Amount of attempts", "10", 500);
+            int pogingen = 0;
+            while (string.IsNullOrEmpty(input) || !int.TryParse(input, out pogingen) || pogingen > 20 || pogingen < 3)
+            {
+                MessageBox.Show("Please select a number between 3 and 20!", "Invalid number");
+                input = Interaction.InputBox("How many attempts would you like to have?", "Amount of attempts", "10", 500);
+            }
+            Data.PossibleAttempts = pogingen;
+            ClearUI();
+            Data.ResetGame();
+            Data.StartCountdown();
         }
 
         private string StartGame()
